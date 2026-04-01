@@ -1,0 +1,113 @@
+/* renderer/styles/vars.css
+   Design tokens — every color, size, and spacing value lives here. */
+
+:root {
+
+  /* ── Color palette ──────────────────────────────────────────────────── */
+
+  /* Backgrounds — lifted from pitch black to dark slate */
+  --color-bg-base:       #1a1d2e;   /* Window fill                         */
+  --color-bg-surface:    #222538;   /* Panels, sidebar                     */
+  --color-bg-elevated:   #2a2d42;   /* Hover states, cards                 */
+  --color-bg-overlay:    #32364f;   /* Modals, toasts                      */
+
+  /* Borders — more visible */
+  --color-border:        #3a3d58;   /* Dividers                            */
+  --color-border-strong: #52567a;   /* Active / focused                    */
+
+  /* Accent — slightly brighter indigo */
+  --color-accent:        #7c73ff;
+  --color-accent-dim:    #5a54cc;
+  --color-accent-glow:   rgba(124, 115, 255, 0.20);
+  --color-accent-pulse:  rgba(124, 115, 255, 0.38);
+
+  /* Text — much brighter for readability */
+  --color-text-primary:  #f0eeff;   /* Main text — near white              */
+  --color-text-secondary:#c4c0e0;   /* Secondary — clearly readable        */
+  --color-text-muted:    #7e7a9a;   /* Placeholders — still legible        */
+  --color-text-inverse:  #1a1d2e;
+
+  /* System colors — slightly brighter */
+  --color-nes:           #ff6b6b;
+  --color-snes:          #9b8ff0;
+  --color-gba:           #6db8f0;
+  --color-genesis:       #5ecf8e;
+  --color-atari:         #f0a85a;
+  --color-gb:            #a0d46e;
+
+  /* Status */
+  --color-success:       #5ecf8e;
+  --color-error:         #ff6b6b;
+  --color-warning:       #f0a85a;
+
+
+  /* ── Typography ─────────────────────────────────────────────────────── */
+
+  --font-ui:       'Barlow', sans-serif;
+  --font-mono:     'Share Tech Mono', monospace;
+
+  --text-xs:    11px;
+  --text-sm:    13px;
+  --text-base:  14px;
+  --text-md:    15px;
+  --text-lg:    17px;
+  --text-xl:    20px;
+  --text-2xl:   24px;
+  --text-3xl:   32px;
+
+  --weight-normal:   400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  --leading-tight:   1.2;
+  --leading-normal:  1.5;
+
+
+  /* ── Layout ──────────────────────────────────────────────────────────── */
+
+  --titlebar-height:  38px;
+  --sys-panel-width:  220px;
+  --drop-col-width:   260px;
+  --tile-width:       160px;
+  --tile-height:      220px;
+  --tile-gap:         16px;
+
+
+  /* ── Spacing ─────────────────────────────────────────────────────────── */
+
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+
+  /* ── Radii ───────────────────────────────────────────────────────────── */
+
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:  12px;
+  --radius-xl:  16px;
+  --radius-pill: 999px;
+
+
+  /* ── Shadows ─────────────────────────────────────────────────────────── */
+
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.35);
+  --shadow-md:  0 4px 12px rgba(0,0,0,0.45);
+  --shadow-lg:  0 8px 28px rgba(0,0,0,0.55);
+  --shadow-glow: 0 0 20px var(--color-accent-glow);
+
+
+  /* ── Transitions ─────────────────────────────────────────────────────── */
+
+  --transition-fast:   80ms ease;
+  --transition-base:  160ms ease;
+  --transition-slow:  280ms ease;
+  --transition-enter: 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}

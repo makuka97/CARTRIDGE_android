@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+  <title>CARTRIDGE</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { width:100%; height:100%; background:#000; overflow:hidden; }
+    #ejs-player { width:100%; height:100%; }
+    #loading { position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#0d0f1a; color:#fff; font-family:sans-serif; gap:16px; z-index:999; }
+    #loading.gone { display:none; }
+    .spinner { width:36px; height:36px; border:3px solid rgba(255,255,255,0.15); border-top-color:#7c73ff; border-radius:50%; animation:spin 0.8s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    #loading-title { font-size:16px; font-weight:600; opacity:0.9; }
+    #loading-sub { font-size:12px; opacity:0.45; }
+  </style>
+</head>
+<body>
+<div id="loading"><div class="spinner"></div><div id="loading-title">Loading…</div><div id="loading-sub">Starting emulator</div></div>
+<button id="btn-exit" onclick="if(window.androidApi&&window.androidApi.exitGame)window.androidApi.exitGame();else history.back();" style="position:fixed;top:16px;left:16px;z-index:9999;background:rgba(0,0,0,0.6);border:1.5px solid rgba(255,255,255,0.2);border-radius:20px;color:#fff;font-family:sans-serif;font-size:13px;font-weight:600;padding:8px 16px;cursor:pointer;backdrop-filter:blur(8px);">← Library</button>
+<div id="ejs-player"></div>
+<script>
+(function() {
+  var CORE_MAP = {
+    'fceumm.wasm':'fceumm','snes9x.wasm':'snes9x','mgba.wasm':'mgba',
+    'genesis_plus_gx.wasm':'genesis_plus_gx','stella.wasm':'stella2014','prosystem.wasm':'prosystem'
+  };
+
+  function installSaveInterceptor(ejs) {
+    console.log("Installing save/load interceptor...");
+    var _callEvent = ejs.callEvent.bind(ejs);
+
+    ejs.callEvent = function(event, data) {
+      console.log("callEvent:", event);
+
+      if (event === "saveState" && data && data.state) {
+        try {
+          var bytes  = data.state;
+          var binary = "";
+          for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+          var base64 = btoa(binary);
+          var gameId = window.__game.id;
+          var slot   = "0";
+          try { slot = ejs.getSettingValue("save-state-slot") || "0"; } catch(e) {}
+          var path   = window.androidApi.getSaveDir(gameId) + "/slot_" + slot + ".state";
+          var result = JSON.parse(window.androidApi.writeState(path, base64));
+          console.log("Save result:", result, "path:", path);
+          if (result.ok) ejs.displayMessage("State Saved!");
+          else ejs.displayMessage("Save Failed!");
+        } catch(e) {
+          console.error("Save error:", e.message);
+          ejs.displayMessage("Save Failed: " + e.message);
+        }
+        return 1;
+      }
+
+      if (event === "loadState") {
+        try {
+          var gameId = window.__game.id;
+          var slot   = "0";
+          try { slot = ejs.getSettingValue("save-state-slot") || "0"; } catch(e) {}
+          var path   = window.androidApi.getSaveDir(gameId) + "/slot_" + slot + ".state";
+          var base64 = window.androidApi.readState(path);
+          if (!base64) { ejs.displayMessage("No Save Found!"); return 1; }
+          var binary = atob(base64);
+          var bytes  = new Uint8Array(binary.length);
+          for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+          ejs.gameManager.loadState(bytes);
+          ejs.displayMessage("State Loaded!");
+        } catch(e) {
+          console.error("Load error:", e.message);
+          ejs.displayMessage("Load Failed: " + e.message);
+        }
+        return 1;
+      }
+
+      return _callEvent(event, data);
+    };
+    console.log("Save/Load interceptor installed!");
+  }
+
+  function tryStart() {
+    var g = window.__game;
+    if (!g || !g.romPath || !g.core || !g.dataUrl) { setTimeout(tryStart, 100); return; }
+    document.getElementById('loading-title').textContent = g.name;
+    document.getElementById('loading-sub').textContent   = 'Loading ' + g.core.replace('.wasm','') + ' core…';
+    var port   = g.dataUrl.match(/:(\d+)/)[1];
+    var romUrl = 'http://localhost:' + port + '/rom?path=' + encodeURIComponent(g.romPath);
+
+    window.EJS_player          = '#ejs-player';
+    window.EJS_core            = CORE_MAP[g.core] || 'mgba';
+    window.EJS_gameUrl         = romUrl;
+    window.EJS_pathtodata      = g.dataUrl;
+    window.EJS_startOnLoaded   = true;
+    window.EJS_color           = '#7c73ff';
+    window.EJS_backgroundColor = '#0d0f1a';
+    window.EJS_adUrl           = '';
+    window.EJS_mobileControls  = true;
+    window.EJS_Buttons = {
+      playPause:true, restart:false, mute:true, settings:true,
+      fullscreen:false, saveState:true, loadState:true,
+      screenRecord:false, gamepad:false, cheat:false, volume:true,
+      saveSavFiles:true, quickSave:true, quickLoad:true
+    };
+
+    window.EJS_onGameStart = function() {
+      document.getElementById('loading').classList.add('gone');
+      // Install interceptor immediately when game starts
+      installSaveInterceptor(window.EJS_emulator);
+    };
+
+    var script     = document.createElement('script');
+    script.src     = g.dataUrl + 'loader.js';
+    script.onerror = function() { document.getElementById('loading-sub').textContent = 'Failed to load core'; };
+    document.body.appendChild(script);
+  }
+
+  document.addEventListener('DOMContentLoaded', tryStart);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CARTRIDGE</string>
+    <string name="scan_folder">Scan for ROMs</string>
+    <string name="add_rom">Add ROM</string>
+</resources>

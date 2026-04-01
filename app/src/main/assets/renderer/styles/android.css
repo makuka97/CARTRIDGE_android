@@ -1,0 +1,131 @@
+/* android.css — injected on Android only, appended after components.css */
+
+/* ── Import buttons (replace drop zone on Android) ───────────────────── */
+
+.android-import {
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  gap:             12px;
+  padding:         24px 16px;
+  width:           100%;
+}
+
+.android-import__btn {
+  display:         flex;
+  align-items:     center;
+  gap:             10px;
+  padding:         14px 28px;
+  border-radius:   12px;
+  border:          none;
+  font-size:       15px;
+  font-weight:     600;
+  cursor:          pointer;
+  width:           100%;
+  max-width:       320px;
+  justify-content: center;
+  background:      var(--color-surface-2, #1e2235);
+  color:           var(--color-text, #e8eaf6);
+  transition:      background 0.15s, transform 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.android-import__btn--primary {
+  background: var(--color-accent, #7c73ff);
+  color:      #ffffff;
+}
+
+.android-import__btn:active {
+  transform:  scale(0.97);
+  background: var(--color-accent-dim, #5a52cc);
+}
+
+.android-import__btn--primary:active {
+  background: var(--color-accent-dim, #5a52cc);
+}
+
+/* ── Scan progress bar ────────────────────────────────────────────────── */
+
+.android-import__progress {
+  width:   100%;
+  padding: 12px 16px;
+}
+
+.android-import__progress-bar {
+  height:        6px;
+  background:    var(--color-surface-2, #1e2235);
+  border-radius: 3px;
+  overflow:      hidden;
+}
+
+.android-import__progress-fill {
+  height:        100%;
+  width:         0%;
+  background:    var(--color-accent, #7c73ff);
+  border-radius: 3px;
+  transition:    width 0.2s ease;
+}
+
+.android-import__progress-label {
+  margin:     6px 0 0;
+  font-size:  12px;
+  color:      var(--color-text-muted, #6b7280);
+  text-align: center;
+  overflow:   hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* ── Game tiles — larger tap targets on mobile ───────────────────────── */
+
+@media (max-width: 600px) {
+  .tile {
+    border-radius: 10px;
+  }
+
+  /* Slightly larger font on small screens */
+  .tile__name {
+    font-size: 13px;
+  }
+}
+
+/* ── Hide desktop-only UI elements ───────────────────────────────────── */
+
+/* Custom titlebar is handled by Android OS */
+.titlebar {
+  display: none !important;
+}
+
+/* Keyboard shortcut hints in HUD are irrelevant on mobile */
+.game-hud__btn kbd {
+  display: none;
+}
+
+/* Fullscreen button not needed — Android is always fullscreen */
+#hud-fullscreen {
+  display: none;
+}
+
+/* ── HUD exit button — bigger tap target ─────────────────────────────── */
+
+.game-hud__btn--exit {
+  padding:       12px 20px;
+  border-radius: 10px;
+  font-size:     15px;
+}
+
+/* ── Scrollbar styling on Android WebView ────────────────────────────── */
+
+::-webkit-scrollbar {
+  width:  4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background:    var(--color-surface-3, #2a2d42);
+  border-radius: 2px;
+}

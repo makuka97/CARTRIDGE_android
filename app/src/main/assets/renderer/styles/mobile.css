@@ -1,0 +1,469 @@
+/* mobile.css — full mobile UI matching CARTRIDGE design mockup */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --color-bg:          #f2f2f7;
+  --color-surface:     #ffffff;
+  --color-surface-2:   #f2f2f7;
+  --color-border:      rgba(0,0,0,0.08);
+  --color-text:        #1c1c1e;
+  --color-text-sub:    #6b7280;
+  --color-accent:      #1c1c1e;
+  --color-accent-text: #ffffff;
+  --color-nav-active:  #1c1c1e;
+  --color-nav-idle:    #8e8e93;
+  --color-scan-bg:     #1c1c1e;
+  --color-scan-text:   #ffffff;
+  --color-pill-bg:     #e5e5ea;
+  --color-pill-active: #1c1c1e;
+  --color-pill-text-active: #ffffff;
+  --color-danger:      #ff3b30;
+  --radius-card:       14px;
+  --radius-btn:        12px;
+  --header-h:          56px;
+  --nav-h:             72px;
+  --safe-bottom:       env(safe-area-inset-bottom, 0px);
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--color-bg);
+  font-family: 'Barlow', -apple-system, sans-serif;
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* ── Header ────────────────────────────────────────────────────── */
+
+.m-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  padding-top: env(safe-area-inset-top, 0px);
+  height: calc(var(--header-h) + env(safe-area-inset-top, 0px));
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.m-header__title {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--color-text);
+}
+
+.m-header__menu,
+.m-header__settings {
+  background: none;
+  border: none;
+  color: var(--color-text);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.m-header__menu:active,
+.m-header__settings:active { opacity: 0.5; }
+
+/* ── Pages ─────────────────────────────────────────────────────── */
+
+.m-page {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+.m-page--hidden { display: none !important; }
+
+/* ── Search ─────────────────────────────────────────────────────── */
+
+.m-search-wrap {
+  padding: 14px 16px 8px;
+  flex-shrink: 0;
+}
+
+.m-search {
+  display: flex;
+  align-items: center;
+  background: var(--color-surface-2);
+  border-radius: 12px;
+  padding: 0 14px;
+  gap: 10px;
+  border: 1px solid var(--color-border);
+}
+
+.m-search__icon { color: var(--color-text-sub); flex-shrink: 0; }
+
+.m-search__input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--color-text);
+  padding: 12px 0;
+  -webkit-appearance: none;
+}
+
+.m-search__input::placeholder { color: var(--color-text-sub); }
+
+/* ── Scan button ────────────────────────────────────────────────── */
+
+.m-scan-wrap {
+  padding: 4px 16px 12px;
+  flex-shrink: 0;
+}
+
+.m-scan-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--color-scan-bg);
+  color: var(--color-scan-text);
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.15s;
+}
+
+.m-scan-btn:active { opacity: 0.75; }
+
+/* ── Progress bar ───────────────────────────────────────────────── */
+
+.m-progress {
+  padding: 8px 16px 4px;
+  flex-shrink: 0;
+}
+
+.m-progress__bar {
+  height: 4px;
+  background: var(--color-border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.m-progress__fill {
+  height: 100%;
+  width: 0%;
+  background: var(--color-accent);
+  border-radius: 2px;
+  transition: width 0.2s ease;
+}
+
+.m-progress__label {
+  font-size: 11px;
+  color: var(--color-text-sub);
+  text-align: center;
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Select bar ─────────────────────────────────────────────────── */
+
+.m-select-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.m-select-bar__actions { display: flex; gap: 8px; }
+
+.m-btn {
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.m-btn--danger { color: var(--color-danger); border-color: var(--color-danger); }
+.m-btn:disabled { opacity: 0.4; }
+
+/* ── System pills ───────────────────────────────────────────────── */
+
+.m-pills {
+  display: flex;
+  gap: 8px;
+  padding: 4px 16px 10px;
+  overflow-x: auto;
+  flex-shrink: 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.m-pills::-webkit-scrollbar { display: none; }
+
+.m-pill {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: var(--color-pill-bg);
+  color: var(--color-text);
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s, color 0.15s;
+}
+
+.m-pill--active {
+  background: var(--color-pill-active);
+  color: var(--color-pill-text-active);
+}
+
+/* ── Game grid ──────────────────────────────────────────────────── */
+
+.m-grid-scroll {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 4px 12px calc(var(--nav-h) + var(--safe-bottom) + 8px);
+}
+
+.m-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+/* ── Game tile ──────────────────────────────────────────────────── */
+
+.m-tile {
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.12s, box-shadow 0.12s;
+  position: relative;
+}
+
+.m-tile:active {
+  transform: scale(0.96);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+}
+
+.m-tile__art {
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--color-surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.m-tile__art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.m-tile__art-placeholder {
+  opacity: 0.2;
+}
+
+.m-tile__info {
+  padding: 10px 10px 12px;
+}
+
+.m-tile__name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 3px;
+}
+
+.m-tile__system {
+  font-size: 11px;
+  color: var(--color-text-sub);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.m-tile__badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 7px;
+  border-radius: 6px;
+  letter-spacing: 0.04em;
+}
+
+/* selected state */
+.m-tile--selected { outline: 3px solid var(--color-accent); }
+
+/* ── Empty state ────────────────────────────────────────────────── */
+
+.m-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 32px;
+  text-align: center;
+  gap: 12px;
+}
+
+.m-empty__icon { color: var(--color-text-sub); opacity: 0.35; }
+
+.m-empty__title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.m-empty__sub {
+  font-size: 14px;
+  color: var(--color-text-sub);
+  line-height: 1.5;
+}
+
+/* ── Section title ──────────────────────────────────────────────── */
+
+.m-section-title {
+  font-size: 22px;
+  font-weight: 700;
+  padding: 20px 16px 12px;
+  flex-shrink: 0;
+}
+
+/* ── Settings page ──────────────────────────────────────────────── */
+
+.m-settings-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 16px calc(var(--nav-h) + var(--safe-bottom) + 8px);
+}
+
+/* ── Bottom nav ─────────────────────────────────────────────────── */
+
+.m-bottom-nav {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  padding-top: 8px;
+  padding-bottom: calc(8px + var(--safe-bottom));
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+}
+
+.m-nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  background: none;
+  border: none;
+  color: var(--color-nav-idle);
+  cursor: pointer;
+  padding: 4px 20px;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.15s;
+  min-width: 64px;
+}
+
+.m-nav-btn span {
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.m-nav-btn--active {
+  color: var(--color-nav-active);
+}
+
+.m-nav-btn:active { opacity: 0.6; }
+
+/* ── Toast (reuse from desktop) ─────────────────────────────────── */
+
+#toast-container {
+  position: fixed;
+  bottom: calc(var(--nav-h) + var(--safe-bottom) + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+  width: calc(100% - 32px);
+  max-width: 360px;
+}
+
+/* Select mode */
+.m-tile__check {
+  position:absolute; inset:0;
+  background:rgba(124,115,255,0.55);
+  display:flex; align-items:center; justify-content:center;
+  border-radius:14px;
+}
+.m-tile--selected { outline:3px solid #7c73ff; border-radius:14px; }
+.m-select-bar { display:flex; align-items:center; justify-content:space-between; padding:8px 16px; background:var(--color-surface); border-bottom:1px solid var(--color-border); flex-shrink:0; font-size:14px; font-weight:500; }
+.m-select-bar__actions { display:flex; gap:8px; }
+
+/* Settings */
+.m-settings-label { font-size:12px; font-weight:600; color:var(--color-text-sub); text-transform:uppercase; letter-spacing:0.08em; padding:16px 16px 6px; }
+.m-settings-group { background:var(--color-surface); border-radius:14px; margin:0 16px 16px; overflow:hidden; border:1px solid var(--color-border); }
+.m-settings-row { display:flex; align-items:center; justify-content:space-between; padding:14px 16px; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.m-settings-row:not(:last-child) { border-bottom:1px solid var(--color-border); }
+.m-settings-row:active { background:var(--color-surface-2); }
+.m-settings-row__label { display:flex; align-items:center; gap:10px; font-size:15px; font-weight:500; }
+.m-settings-row__label--danger { color:var(--color-danger); }
+.m-settings-input-row { display:flex; gap:8px; padding:8px 12px 12px; border-bottom:1px solid var(--color-border); }
+.m-settings-input { flex:1; background:var(--color-surface-2); border:1px solid var(--color-border); border-radius:10px; padding:10px 12px; font-size:14px; font-family:monospace; color:var(--color-text); outline:none; }
+.m-settings-save-btn { background:var(--color-accent); color:#fff; border:none; border-radius:10px; padding:10px 16px; font-size:14px; font-weight:600; cursor:pointer; font-family:inherit; -webkit-tap-highlight-color:transparent; }
+.m-settings-version { text-align:center; font-size:12px; color:var(--color-text-sub); padding:16px; }

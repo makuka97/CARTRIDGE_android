@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Cartridge" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#7c73ff</item>
+        <item name="colorPrimaryVariant">#5a52cc</item>
+        <item name="colorOnPrimary">#ffffff</item>
+        <item name="colorSurface">#1a1d2e</item>
+        <item name="android:windowBackground">#0d0f1a</item>
+        <item name="android:statusBarColor">#0d0f1a</item>
+        <item name="android:navigationBarColor">#0d0f1a</item>
+    </style>
+
+    <!-- Fullscreen theme for GameActivity — no status bar, no nav bar -->
+    <style name="Theme.Cartridge.Fullscreen" parent="Theme.Cartridge">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+</resources>

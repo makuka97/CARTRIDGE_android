@@ -1,0 +1,20 @@
+﻿# Build outputs
+app/build/
+build/
+
+# Signing key — NEVER commit this
+cartridge-release.jks
+
+# Local config
+local.properties
+*.local.properties
+
+# Android Studio
+.idea/
+*.iml
+.gradle/
+gradle/wrapper/gradle-wrapper.jar
+
+# OS
+.DS_Store
+Thumbs.db

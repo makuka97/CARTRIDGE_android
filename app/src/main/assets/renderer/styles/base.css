@@ -1,0 +1,174 @@
+/* renderer/styles/base.css
+   Reset + shell layout.
+   Defines the 3-column structure: sys-panel | lib-col | drop-col */
+
+
+/* ── Reset ───────────────────────────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body {
+  font-family: var(--font-ui);
+  font-size: var(--text-base);
+  font-weight: var(--weight-normal);
+  line-height: var(--leading-normal);
+  color: var(--color-text-primary);
+  background: var(--color-bg-base);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+input  { font-family: inherit; }
+
+
+/* ── App shell ───────────────────────────────────────────────────────────── */
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+
+/* ── Titlebar (frameless drag region) ───────────────────────────────────── */
+
+#titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--titlebar-height);
+  padding: 0 var(--space-4);
+  background: var(--color-bg-base);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+
+  /* Makes the entire bar draggable for window movement */
+  -webkit-app-region: drag;
+}
+
+/* Buttons inside the titlebar must opt out of dragging */
+#titlebar button,
+#titlebar input,
+#titlebar a {
+  -webkit-app-region: no-drag;
+}
+
+.titlebar__wordmark {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.titlebar__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.titlebar__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.titlebar__btn:hover {
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+}
+
+.titlebar__btn--close:hover {
+  background: rgba(224, 90, 90, 0.2);
+  color: var(--color-error);
+}
+
+
+/* ── Main content area (3 columns) ──────────────────────────────────────── */
+
+#shell {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+
+/* ── Col 1: System nav panel ─────────────────────────────────────────────── */
+
+#sys-panel {
+  width: var(--sys-panel-width);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-surface);
+  border-right: 1px solid var(--color-border);
+  overflow: hidden; /* No scroll — content must fit */
+}
+
+
+/* ── Col 2: Library (scrollable) ─────────────────────────────────────────── */
+
+#lib-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--color-bg-base);
+}
+
+#lib-col__scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--space-6);
+  min-height: 0;
+}
+
+/* Scrollbar styling */
+#lib-col__scroll::-webkit-scrollbar {
+  width: 6px;
+}
+#lib-col__scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+#lib-col__scroll::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: var(--radius-pill);
+}
+#lib-col__scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+
+/* ── Col 3: Drop zone ────────────────────────────────────────────────────── */
+
+#drop-col {
+  width: var(--drop-col-width);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-surface);
+  border-left: 1px solid var(--color-border);
+  overflow: hidden; /* No scroll */
+}
